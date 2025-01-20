@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "minibach"
+version = "0.1.0"
+description = "A Language model project for music generation."
+authors = ["Marcin Banak", "Mikołaj Karapka"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = "^2.5.1"
+transformers = "^4.48.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
