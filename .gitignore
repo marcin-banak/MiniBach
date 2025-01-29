@@ -170,5 +170,5 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-data/adl-piano-midi
-data/filtered-midi-files
+minibach/data/adl-piano-midi
+minibach/data/filtered-midi-files

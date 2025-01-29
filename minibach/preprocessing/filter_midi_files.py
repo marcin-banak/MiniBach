@@ -65,8 +65,8 @@ def compare_folders(input_folder, output_folder):
         print("Oba foldery zawierają tę samą liczbę plików MIDI.")
 
 if __name__ == "__main__":
-    input_folder = "../data/adl-piano-midi"  # Podaj ścieżkę do folderu wejściowego
-    output_folder = "../data/filtered-midi-files"  # Podaj ścieżkę do folderu wyjściowego
+    input_folder = "data/adl-piano-midi"  # Podaj ścieżkę do folderu wejściowego
+    output_folder = "data/filtered-midi-files"  # Podaj ścieżkę do folderu wyjściowego
 
     filter_midi_files(input_folder, output_folder)
     print("Przetwarzanie zakończone.")
