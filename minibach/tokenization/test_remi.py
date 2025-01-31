@@ -1,21 +1,21 @@
-from miditok import REMI
+from miditok import REMI, TokSequence, TokenizerConfig
+from miditoolkit import MidiFile
 
-# Tworzenie instancji tokenizera REMI
-tokenizer = REMI()
+config = TokenizerConfig(use_chords=True)
+tokenizer = REMI(config)
 
-# Wczytanie pliku MIDI
-midi_file = 'data/filtered-midi-files/Ambient/A Foggy Day (In London Town) (Album Version).mid'
+midi_file_path = "minibach/data/filtered-midi-files/Ambient/A Foggy Day (In London Town) (Album Version).mid"
 
-# Tokenizacja pliku MIDI do tokenów REMI
-tokens = tokenizer.midi_to_tokens(midi_file)
+tokens = tokenizer.encode(midi_file_path, encode_ids=False)[0]
+tokenizer.add_to_vocab("Genre_Jazz", special_token=True)
+tokens.tokens.insert(0, "Genre_Jazz")
+tokens.ids = []
+tokens.bytes = []
+print("Genre_Jazz" in tokens.tokens)
+tokenizer.complete_sequence(tokens)
+print(tokenizer.vocab["Genre_Jazz"] in tokens.ids)
 
-# Wyświetlenie tokenów
-print("Tokeny REMI:", tokens)
+print(tokens.split_per_bars()[9])
 
-# Opcjonalnie: Zamiana tokenów na liczby (ID)
-encoded_tokens = tokenizer.tokens_to_ids(tokens)
-print("Tokeny jako liczby:", encoded_tokens)
-
-# Opcjonalnie: Zamiana liczby z powrotem na tokeny
-decoded_tokens = tokenizer.ids_to_tokens(encoded_tokens)
-print("Z powrotem na tokeny:", decoded_tokens)
+# with open("test.txt", 'w') as file:
+#     file.write(str(tokens[0]))
