@@ -172,3 +172,5 @@ cython_debug/
 
 minibach/data/adl-piano-midi
 minibach/data/filtered-midi-files
+
+minibach/LLM/test*

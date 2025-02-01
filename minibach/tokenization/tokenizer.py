@@ -3,8 +3,10 @@ from minibach.tokenization.CONST import TOKENIZER_CONFIG, VOCAB_SIZE, MODEL
 from pathlib import Path
 import os
 
+
 class InvalidModelName(Exception):
     pass
+
 
 class Tokenizer:
     def __init__(self, config: TokenizerConfig = TOKENIZER_CONFIG):
@@ -30,20 +32,18 @@ class Tokenizer:
             genre_path = os.path.join(midi_root, genre)
             if not os.path.isdir(genre_path):
                 continue
-            
+
             genre_token = f"Genre_{genre}"
             self.tokenizer.add_to_vocab(genre_token, special_token=True)
 
     def create_dataset_paths(self, dataset_path):
-        dataset_path = dataset_path.split('/')
+        dataset_path = dataset_path.split("/")
         return list(Path(*dataset_path).glob("**/*.mid"))
 
     def train(self, dataset_paths, vocab_size=VOCAB_SIZE, model=MODEL):
         print("Training Tokenizer.")
         self.tokenizer.train(
-            vocab_size=vocab_size,
-            model=model,
-            files_paths=dataset_paths
+            vocab_size=vocab_size, model=model, files_paths=dataset_paths
         )
 
     def encode(self, midi_path: str) -> TokSequence:
@@ -55,11 +55,14 @@ class Tokenizer:
     def load_model(self, model_name):
         if not model_name.endswith(".json"):
             raise InvalidModelName()
-        path = os.path.join('.', 'models', model_name)
+        path = os.path.join(".", "models", model_name)
         self.tokenizer.save(path)
 
     def save_model(self, model_name):
         if not model_name.endswith(".json"):
             raise InvalidModelName()
-        path = os.path.join('.', 'models', model_name)
+        path = os.path.join(".", "models", model_name)
         self.tokenizer = REMI(path)
+
+    def get_vocab_size(self):
+        return self.tokenizer.vocab_size
