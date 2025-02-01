@@ -24,6 +24,9 @@ def check_meter(midi_file_path):
 def check_midi_file(midi_file_path):
     return check_meter(midi_file_path)
 
+def parse_file_name(file_name):
+    return "".join(filter(lambda ch: 0 <= ord(ch) <=255, file_name))
+
 def filter_midi_files(input_folder, output_folder):
     # Przechodzimy przez wszystkie pliki w folderze
     for root, dirs, files in os.walk(input_folder):
@@ -39,7 +42,7 @@ def filter_midi_files(input_folder, output_folder):
                     os.makedirs(new_folder_path, exist_ok=True)
                         
                     # Kopiujemy plik MIDI do nowej lokalizacji
-                    new_file_path = os.path.join(new_folder_path, file)
+                    new_file_path = os.path.join(new_folder_path, parse_file_name(file))
                     shutil.copy(midi_file_path, new_file_path)
 
 def count_midi_files(folder_path):
@@ -65,8 +68,8 @@ def compare_folders(input_folder, output_folder):
         print("Oba foldery zawierają tę samą liczbę plików MIDI.")
 
 if __name__ == "__main__":
-    input_folder = "data/adl-piano-midi"  # Podaj ścieżkę do folderu wejściowego
-    output_folder = "data/filtered-midi-files"  # Podaj ścieżkę do folderu wyjściowego
+    input_folder = "minibach/data/adl-piano-midi"  # Podaj ścieżkę do folderu wejściowego
+    output_folder = "minibach/data/filtered-midi-files"  # Podaj ścieżkę do folderu wyjściowego
 
     filter_midi_files(input_folder, output_folder)
     print("Przetwarzanie zakończone.")

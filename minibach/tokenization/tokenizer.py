@@ -1,5 +1,6 @@
 from miditok import REMI, TokenizerConfig, TokSequence
 from minibach.tokenization.CONST import TOKENIZER_CONFIG, VOCAB_SIZE, MODEL
+from pathlib import Path
 import os
 
 class InvalidModelName(Exception):
@@ -24,9 +25,7 @@ class Tokenizer:
 
         return sequence
 
-    def _create_dataset(self, midi_root):
-        dataset = []
-
+    def add_special_tokens(self, midi_root):
         for genre in os.listdir(midi_root):
             genre_path = os.path.join(midi_root, genre)
             if not os.path.isdir(genre_path):
@@ -35,28 +34,23 @@ class Tokenizer:
             genre_token = f"Genre_{genre}"
             self.tokenizer.add_to_vocab(genre_token, special_token=True)
 
-            for file in os.listdir(genre_path):
-                if not file.endswith(".mid"):
-                    continue
+    def create_dataset_paths(self, dataset_path):
+        dataset_path = dataset_path.split('/')
+        return list(Path(*dataset_path).glob("**/*.mid"))
 
-                file_path = os.path.join(genre_path, file)
-                try:
-                    tokens = self.tokenizer(file_path, encode_ids=False)[0].tokens
-                    tokens.insert(0, genre_token)
-
-                    dataset.append(tokens)
-                except Exception as e:
-                    print(f"Błąd podczas tokenizacji {file}: {e}")
-
-        return dataset
-
-    def train(self, dataset_path, vocab_size=VOCAB_SIZE, model=MODEL):
-        dataset = self._create_dataset(dataset_path)
+    def train(self, dataset_paths, vocab_size=VOCAB_SIZE, model=MODEL):
+        print("Training Tokenizer.")
         self.tokenizer.train(
             vocab_size=vocab_size,
             model=model,
-            iterator=dataset
+            files_paths=dataset_paths
         )
+
+    def encode(self, midi_path: str) -> TokSequence:
+        pass
+
+    def decode(self, token_sequence: TokSequence):
+        pass
 
     def load_model(self, model_name):
         if not model_name.endswith(".json"):
