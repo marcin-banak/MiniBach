@@ -174,3 +174,7 @@ minibach/data/adl-piano-midi
 minibach/data/filtered-midi-files
 
 minibach/LLM/test*
+
+minibach/others/
+
+minibach/LLM/Maestro*
