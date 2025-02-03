@@ -178,3 +178,5 @@ minibach/LLM/test*
 minibach/others/
 
 minibach/LLM/Maestro*
+
+minibach/LLM/gen_res
