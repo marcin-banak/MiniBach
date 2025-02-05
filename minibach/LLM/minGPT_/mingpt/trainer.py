@@ -72,7 +72,7 @@ class Trainer:
         # setup the dataloader
         train_loader = DataLoader(
             self.train_dataset,
-            shuffle=True,  # ✅ Domyślne shuffle działa lepiej niż `RandomSampler`
+            shuffle=True,
             pin_memory=True,
             batch_size=config.batch_size,
             num_workers=config.num_workers,

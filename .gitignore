@@ -183,3 +183,4 @@ minibach/LLM/gen_res
 
 minibach/LLM/trained
 minibach/LLM/filtered_midi
+minibach/LLM/fine_tuned
