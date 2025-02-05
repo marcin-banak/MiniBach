@@ -180,3 +180,6 @@ minibach/others/
 minibach/LLM/Maestro*
 
 minibach/LLM/gen_res
+
+minibach/LLM/trained
+minibach/LLM/filtered_midi
